@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ฟอร์มขอใช้บริการห้อง SR (Study Room)</title>
+    <link rel="stylesheet" href="styles1.css">
+</head>
+<body>
+
+<h1>ฟอร์มขอใช้บริการห้อง SR (Study Room)</h1>
+
+<form action="https://sheetdb.io/api/v1/9xfxpbcp0lt0n" method="post" id="study-room-form">
+    <div class="form-group">
+        <label for="name">ชื่อ - นามสกุล:</label>
+        <input type="text" id="name" name="name" placeholder="กรอกชื่อ-นามสกุล" pattern="[ก-๙a-zA-Z\s]+" required>
+    </div>
+
+    <label>ผู้ใช้บริการ:</label>
+    <div class="radio-group">
+        <label><input type="radio" name="identify" value="นักศึกษา" onclick="toggleFields()"> นักศึกษา</label>
+        <label><input type="radio" name="identify" value="อาจารย์,บุคลากร" onclick="toggleFields()"> อาจารย์,บุคลากร</label>
+    </div>
+
+    <div class="form-group" id="student-id-group">
+        <label for="S_ID">รหัสนักศึกษา:</label>
+        <input type="text" id="S_ID" name="S_ID" placeholder="กรอกรหัสนักศึกษา" pattern="\d{7,10}">
+    </div>
+
+    <div class="form-group" id="staff-id-group" style="display: none;">
+        <label for="M_ID">รหัสอาจารย์หรือบุคลากร:</label>
+        <input type="text" id="M_ID" name="M_ID" placeholder="กรอกรหัสอาจารย์หรือบุคลากร" pattern="\d{7,10}">
+    </div>
+
+    <label>คณะหรือวิทยาลัย:</label>
+    <select id="faculty" name="faculty" onchange="updateDepartment()" required>
+        <option value="" disabled selected>เลือกคณะ</option>
+        <option value="วิทยาลัยแพทยศาสตร์">วิทยาลัยแพทยศาสตร์</option>
+        <option value="วิทยาลัยทันตแพทยศาสตร์ (Bilingual)">วิทยาลัยทันตแพทยศาสตร์ (Bilingual)</option>
+        <option value="วิทยาลัยเภสัชศาสตร์">วิทยาลัยเภสัชศาสตร์</option>
+        <option value="คณะพยาบาลศาสตร์">คณะพยาบาลศาสตร์</option>
+        <option value="คณะรังสีเทคนิค">คณะรังสีเทคนิค</option>
+        <option value="คณะเทคนิคการแพทย์">คณะเทคนิคการแพทย์</option>
+        <option value="คณะกายภาพบำบัดและเวชศาสตร์การกีฬา">คณะกายภาพบำบัดและเวชศาสตร์การกีฬา</option>
+        <option value="วิทยาลัยการแพทย์แผนตะวันออก">วิทยาลัยการแพทย์แผนตะวันออก</option>
+        <option value="คณะวิทยาศาสตร์">คณะวิทยาศาสตร์</option>
+        <option value="วิทยาลัยวิศวกรรมชีวการแพทย์">วิทยาลัยวิศวกรรมชีวการแพทย์</option>
+        <option value="คณะทัศนมาตรศาสตร">คณะทัศนมาตรศาสตร</option>
+        <option value="คณะเทคโนโลยีอาหาร">คณะเทคโนโลยีอาหาร</option>
+        <option value="คณะนวัตกรรมเกษตร">คณะนวัตกรรมเกษตร</option>
+        <option value="วิทยาลัยนวัตกรรมดิจิทัลเทคโนโลยี">วิทยาลัยนวัตกรรมดิจิทัลเทคโนโลยี</option>
+        <option value="วิทยาลัยวิศวกรรมศาสตร์">วิทยาลัยวิศวกรรมศาสตร์</option>
+        <option value="สถาบันการบิน">สถาบันการบิน</option>
+        <option value="วิทยาลัยการออกแบบ">วิทยาลัยการออกแบบ</option>
+        <option value="คณะดิจิทัลอาร์ต">คณะดิจิทัลอาร์ต</option>
+        <option value="คณะสถาปัตยกรรมศาสตร์">คณะสถาปัตยกรรมศาสตร์</option>
+        <option value="คณะบัญชี">คณะบัญชี</option>
+        <option value="คณะบริหารธุรกิจ">คณะบริหารธุรกิจ</option>
+        <option value="คณะเศรษฐศาสตร์">คณะเศรษฐศาสตร์</option>
+        <option value="วิทยาลัยศิลปศาสตร์">วิทยาลัยศิลปศาสตร์</option>
+        <option value="วิทยาลัยนิเทศศาสตร์">วิทยาลัยนิเทศศาสตร์</option>
+        <option value="คณะนิติศาสตร์">คณะนิติศาสตร์</option>
+        <option value="วิทยาลัยฮอสปิตอลลิตี้">วิทยาลัยฮอสปิตอลลิตี้</option>
+        <option value="วิทยาลัยผู้นำและนวัตกรรมสังคม">วิทยาลัยผู้นำและนวัตกรรมสังคม</option>
+        <option value="คณะบันรัฐศาสตร์">คณะบันรัฐศาสตร์</option>
+        <option value="คณะอาชญาวิทยาและการบริหารงานยุติธรรม">คณะอาชญาวิทยาและการบริหารงานยุติธรรม</option>
+        <option value="วิทยาลัยดนตรี">วิทยาลัยดนตรี</option>
+        <option value="International College">International College</option>
+        <option value="INSTITUTE OF DIPLOMACY AND INTERNATIONAL STUDIES">INSTITUTE OF DIPLOMACY AND INTERNATIONAL STUDIES</option>
+        <option value="INTERNATIONAL CHINESE COLLEGE (ระบบเหมาจ่าย)">INTERNATIONAL CHINESE COLLEGE (ระบบเหมาจ่าย)</option>
+    </select>
+
+        <label>สาขาวิชา:</label>
+            <select id="department" name="department" required>
+                <option value="" disabled selected>เลือกสาขาวิชา</option>
+            </select>
+
+    <div class="form-group" id="subject-group">
+        <label for="subject">ปีการศึกษา:</label>
+        <input type="text" id="subject" name="subject" placeholder="กรอกปีการศึกษา">
+    </div>
+
+    <div class="form-group" id="year-group">
+        <label for="year">ชั้นปี:</label>
+        <select id="year" name="year">
+            <option value="" disabled selected>เลือกชั้นปี</option>
+            <option value="1">ปี 1</option>
+            <option value="2">ปี 2</option>
+            <option value="3">ปี 3</option>
+            <option value="4">ปี 4</option>
+            <option value="5">ปี 5</option>
+            <option value="6">ปี 6</option>
+        </select>
+    </div>
+
+    <div class="form-group" id="study-level-group">
+        <label for="study_level">ระดับการศึกษา:</label>
+        <select id="study_level" name="study_level">
+            <option value="" disabled selected>เลือกระดับการศึกษา</option>
+            <option value="ตรี">ปริญญาตรี</option>
+            <option value="โท">ปริญญาโท</option>
+            <option value="เอก">ปริญญาเอก</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="room">ขอใช้บริการห้อง:</label>
+        <select id="room" name="room" required>
+            <option value="" disabled selected>เลือกห้อง</option>
+            <option value="SR1">SR 1 + ไวท์บอร์ด (ไม่เกิน 10 คน)</option>
+            <option value="SR2">SR 2 + ไวท์บอร์ด (ไม่เกิน 10 คน)</option>
+            <option value="SR3">SR 3 + ไวท์บอร์ด (ไม่เกิน 6 คน)</option>
+            <option value="SR4">SR 4 + ไวท์บอร์ด (ไม่เกิน 6 คน)</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="time">รอบใช้บริการ:</label>
+        <select id="time" name="time" required>
+            <option value="" disabled selected>เลือกรอบใช้บริการ</option>
+            <option value="3hr">รอบ 3 ชั่วโมง</option>
+            <option value="extension">ขอต่อกรณีไม่มีผู้ใช้อื่น</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="objective">ขอใช้ห้องเพื่อ:</label>
+        <select id="objective" name="objective" required onchange="toggleAdditionalInput()">
+            <option value="" disabled selected>เลือกจุดประสงค์การใช้งาน</option>
+            <option value="โครงการ">นำเสนอโครงการ</option>
+            <option value="ประชุมกลุ่ม">ประชุมกลุ่ม</option>
+            <option value="ติว">ติว (โปรดระบุชื่อวิชา)</option>
+            <option value="อื่นๆ">อื่นๆ (โปรดระบุ)</option>
+        </select>
+        <input type="text" id="additional-input" placeholder="ระบุจุดประสงค์" name="more" style="display: none;">
+    </div>
+
+    <div class="form-group">
+        <label for="K_NUMBER">จำนวนคน:</label>
+        <select id="K_NUMBER" name="K_NUMBER">
+            <option value="" disabled selected>เลือกจำนวนคนเข้าใช้</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+    </div>
+
+    <label>ชื่อผู้ใช้บริการห้อง:</label>
+    <textarea name="users" rows="4" style="width: 100%;" placeholder="กรุณาใส่หมายเลขหน้าชื่อแต่ละชื่อ เช่น 1.สมชาย ใจดี " required></textarea>
+
+    <label>วันที่:</label>
+    <input type="date" name="date" required>
+
+    <label for="time_in">เวลาที่จะเข้าใช้บริการ:</label>
+    <input type="time" id="time_in" name="time_in" required>
+
+    <div id="message" style="display: none;"></div>
+
+    <button type="submit">ส่งฟอร์ม</button>
+</form>
+
+<script src="script1.js"></script>
+
+</body>
+</html>
